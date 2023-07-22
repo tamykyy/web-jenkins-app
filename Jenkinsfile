@@ -22,7 +22,7 @@ pipeline {
             parallel {
                 stage('Deploy to Staging') {
                     steps {
-                        copyArtifacts projectName: 'test-pipeline-as-code', selector: lastSuccessful()
+                        copyArtifacts filter: '**/*.war', projectName: 'test-pipeline-as-code'
                         deploy adapters: [tomcat9(credentialsId: '5dfa1126-f113-4cce-824f-31fe1bbcb36e', path: '', url: 'http://localhost:8090')], contextPath: null, onFailure: false, war: '**/*.war'                    }
                 }
                 stage("Deploy to Production") {
